@@ -12,7 +12,7 @@ const ENV = require('./config/env')
 let routes = require('./app/routes')
 const port = process.env.PORT || 8000 // (process.env.PORT ? process.env.PORT : 8000) => process.env.PORT || 8000
 
-app.use(cors())
+app.use(cors()) // Ajout pour serveur
 app.use(express.static(__dirname + '/public'))
 // logs
 app.use(morgan('combined'))

@@ -3,10 +3,11 @@
 let Controller = require('./Controller')
 const AIDREC = require('../models/aidreceivers')
 const AIDPRO = require('../models/aidproviders')
+const USER = require ('../models/users')
 
-class AidProvidersController extends Controller {
+class usersController extends Controller {
     constructor(io) {
-        super(AIDPRO)
+        super(USER)
         this.io = io
         var numClients = 0;
         this.io.on('connection', (socket) => {
@@ -39,10 +40,10 @@ class AidProvidersController extends Controller {
 
     }
 
-
     _onSpace(socket) {
 
         socket.on('user', (profession) => {
+          console.log(profession)
             profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
@@ -132,13 +133,11 @@ class AidProvidersController extends Controller {
 
 
     findById(req, res, next) {
-        this.model.findById(req.params.id).populate({
-            path: 'aidreceivers'
-        }).exec((err, document) => {
+        this.model.findById(req.params.id).exec((err, document) => {
             if (err) next(err)
             else res.json(document)
         })
     }
 
 }
-module.exports = AidProvidersController
+module.exports = usersController

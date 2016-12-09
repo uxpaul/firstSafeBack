@@ -2,7 +2,7 @@
 
 let mongoose = require('mongoose')
 
-module.exports = mongoose.model('Providers', new mongoose.Schema({
+module.exports = mongoose.model('User', new mongoose.Schema({
 
   nom: {
       type: String,
@@ -30,11 +30,7 @@ module.exports = mongoose.model('Providers', new mongoose.Schema({
   },
   messages: {
     type : []
-  },
-  aidreceivers: [{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: 'Receivers'
-  }]
+  }
 }, {
     timestamps: true
 }))
