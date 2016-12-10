@@ -23,7 +23,7 @@ class AidProvidersController extends Controller {
                 numClients: numClients
             });
 
-            console.log('Connected clients:', numClients);
+        //    console.log('Connected clients:', numClients);
 
             socket.on('disconnect', function() {
                 numClients--;
@@ -31,7 +31,7 @@ class AidProvidersController extends Controller {
                     numClients: numClients
                 });
 
-                console.log('Connected clients:', numClients);
+            //    console.log('Connected clients:', numClients);
             });
 
         });
@@ -55,22 +55,31 @@ class AidProvidersController extends Controller {
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-            console.log(this.location)
+          //  console.log(this.location)
             if (this.location) {
                 user.lat = this.location.lat
                 user.lng = this.location.lng
             }
-            console.log(user)
             socket.to('aidProvider').emit('emergency', {
                 user: user,
                 id: socket.id
             })
+            console.log(`Id de l'aidReceiver : ${socket.id}`)
         });
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-            console.log(user)
-            socket.to(user.id).emit('accept', user.user)
+          console.log(this.location)
+          console.log("L'aidProvider qui a accepté est" + user)
+          if (this.location) {
+              user.user.lat = this.location.lat
+              user.user.lng = this.location.lng
+          }
+            socket.to(user.id).emit('accept', {
+            user : user.user,
+            id : socket.id
+            })
+            console.log(`L'id de aidProvider est : ${socket.id}`)
         })
 
         // Disconnect the selected socket
@@ -82,7 +91,6 @@ class AidProvidersController extends Controller {
     }
 
     _onConnection(socket) {
-        console.log('User connect _onConnection');
 
         socket.on('authenticate', function(data, callback) {
             socket.auth = false;
