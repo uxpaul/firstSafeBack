@@ -35,30 +35,48 @@ class AidProvidersController extends Controller {
             });
 
         });
-        // nsp.to('iller').emit('hi', 'everyone!');
 
     }
 
-
     _onSpace(socket) {
+        console.log('User connect _onSpace');
 
         socket.on('user', (profession) => {
             profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
-        socket.to('iller').emit('hi', 'aidReceiver');
-        socket.to('doctor').emit('hi', 'aidProvider');
+        //
+        socket.on('location', (location) => {
+            socket.emit('location', location)
+            this.location = location
+                //  console.log(location)
+        })
 
+
+        // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-            socket.to('aidProvider').emit('emergency', {user :user, id: socket.id})
+            console.log(this.location)
+            if (this.location) {
+                user.lat = this.location.lat
+                user.lng = this.location.lng
+            }
+            console.log(user)
+            socket.to('aidProvider').emit('emergency', {
+                user: user,
+                id: socket.id
+            })
         });
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-          console.log(user)
+            console.log(user)
             socket.to(user.id).emit('accept', user.user)
-            console.log(user.id)
+        })
 
+        // Disconnect the selected socket
+        socket.on('disconnect me', () => {
+            console.log("Disconnected")
+            socket.disconnect()
         })
 
     }
@@ -106,26 +124,6 @@ class AidProvidersController extends Controller {
                 }
             }, 15000);
         })
-
-        socket.on('pseudo', (user) => {
-            user = ent.encode(user);
-            console.log(user)
-            socket.user = user
-            socket.broadcast.emit('pseudo', ` Connection de : ${socket.user}`)
-
-        })
-
-
-        socket.on('chat message', (message) => {
-            message = ent.encode(message);
-            console.log(message)
-            socket.broadcast.emit('chat message', {
-                pseudo: socket.user,
-                content: message
-            });
-        });
-
-
     }
 
 

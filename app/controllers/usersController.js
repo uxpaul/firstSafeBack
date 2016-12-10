@@ -3,7 +3,7 @@
 let Controller = require('./Controller')
 const AIDREC = require('../models/aidreceivers')
 const AIDPRO = require('../models/aidproviders')
-const USER = require ('../models/users')
+const USER = require('../models/users')
 
 class usersController extends Controller {
     constructor(io) {
@@ -43,23 +43,20 @@ class usersController extends Controller {
     _onSpace(socket) {
 
         socket.on('user', (profession) => {
-          console.log(profession)
+            console.log(profession)
             profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
-        socket.to('iller').emit('hi', 'aidReceiver');
-        socket.to('doctor').emit('hi', 'aidProvider');
-
         socket.on('emergency', (user) => {
-            socket.to('aidProvider').emit('emergency', {user :user, id: socket.id})
+            socket.to('aidProvider').emit('emergency', {
+                user: user,
+                id: socket.id
+            })
         });
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-          console.log(user)
             socket.to(user.id).emit('accept', user.user)
-            console.log(user.id)
-
         })
 
     }
