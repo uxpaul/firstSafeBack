@@ -30,12 +30,10 @@ module.exports = mongoose.model('User', new mongoose.Schema({
         tyep: String
     },
     lat: {
-        type: Number,
-        unique: true
+        type: Number
     },
     lng: {
-        type: Number,
-        unique: true
+        type: Number
     },
     messages: {
         type: []
