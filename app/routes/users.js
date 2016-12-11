@@ -2,12 +2,16 @@
 
 let usersController = require('../controllers/usersController')
 
-module.exports = (app,io) => {
+module.exports = (app, io) => {
 
     let ctrl = new usersController(io)
 
     app.get('/users', (req, res, next) => {
         return ctrl.find(req, res, next)
+    })
+
+    app.get('/users/:username', (req, res, next) => {
+        return ctrl.findOne(req, res, next)
     })
 
     app.get('/users/:id', (req, res, next) => {

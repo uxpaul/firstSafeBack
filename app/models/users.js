@@ -11,10 +11,14 @@ module.exports = mongoose.model('User', new mongoose.Schema({
     prenom: {
         type: String
     },
-    age : {
-      type:Number
+    username: {
+        type: String,
+        unique: true
     },
-    gender : {
+    age: {
+        type: Number
+    },
+    gender: {
 
     },
     password: {
