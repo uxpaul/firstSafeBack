@@ -22,14 +22,16 @@ class AidProvidersController extends Controller {
             nsp.emit('stats', {
                 numClients: numClients
             });
-            //    console.log('Connected clients:', numClients);
+
+        //    console.log('Connected clients:', numClients);
 
             socket.on('disconnect', function() {
                 numClients--;
                 nsp.emit('stats', {
                     numClients: numClients
                 });
-                //    console.log('Connected clients:', numClients);
+
+            //    console.log('Connected clients:', numClients);
             });
 
         });
@@ -39,9 +41,9 @@ class AidProvidersController extends Controller {
     _onSpace(socket) {
         console.log('User connect _onSpace');
 
-        socket.on('user', (user) => {
-            this.user = user
-            user.situation === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
+        socket.on('user', (profession) => {
+          console.log(profession)
+            profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
         //
@@ -54,7 +56,7 @@ class AidProvidersController extends Controller {
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-            //  console.log(this.location)
+          //  console.log(this.location)
             if (this.location) {
                 user.lat = this.location.lat
                 user.lng = this.location.lng
@@ -68,15 +70,15 @@ class AidProvidersController extends Controller {
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-            console.log(this.location)
-            console.log("L'aidProvider qui a accepté est" + user)
-            if (this.location) {
-                user.user.lat = this.location.lat
-                user.user.lng = this.location.lng
-            }
+          console.log(this.location)
+          console.log("L'aidProvider qui a accepté est" + user)
+          if (this.location) {
+              user.user.lat = this.location.lat
+              user.user.lng = this.location.lng
+          }
             socket.to(user.id).emit('accept', {
-                user: user.user,
-                id: socket.id
+            user : user.user,
+            id : socket.id
             })
             console.log(`L'id de aidProvider est : ${socket.id}`)
         })

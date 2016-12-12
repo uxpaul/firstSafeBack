@@ -48,6 +48,7 @@ process.on('SIGINT', function() {
 mongoose.connect(ENV.db)
 
 //mongoose.connect('mongodb://localhost:27017/firstsafe')
+
 // Création d'un middleware pour logger les erreurs
 app.use((error, request, response, next) => {
     // Middleware to catch all errors
