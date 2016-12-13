@@ -58,6 +58,11 @@ class AidProvidersController extends Controller {
           this.locationR = locationR
         })
 
+        socket.on('locationProvider', locationP=>{
+          socket.emit('locationProvider', locationP)
+          this.locationP = locationP
+        })
+
 
 
         // Reception des infos de l'AR et redirection vers l'AP
@@ -76,13 +81,13 @@ class AidProvidersController extends Controller {
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-          console.log(this.location)
+          console.log(`locationP : ${this.locationP}`)
           console.log("L'aidProvider qui a accepté est" + user)
           socket.leave('aidProvider')
 
           if (this.location) {
-              user.user.lat = this.location.lat
-              user.user.lng = this.location.lng
+              user.user.lat = this.locationP.lat
+              user.user.lng = this.locationP.lng
           }
             socket.to(user.id).emit('accept', {
             user : user.user,
