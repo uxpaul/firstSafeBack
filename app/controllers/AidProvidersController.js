@@ -46,20 +46,26 @@ class AidProvidersController extends Controller {
             profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
-        //
+        // Récuparation de lapoistion actuelle
         socket.on('location', (location) => {
             socket.emit('location', location)
             this.location = location
-                //  console.log(location)
+                  console.log(location)
         })
+
+        socket.on('locationReceiver', (locationR)=>{
+          socket.emit('locationReceiver', locationR)
+          this.locationR = locationR
+        })
+
 
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
           //  console.log(this.location)
-            if (this.location) {
-                user.lat = this.location.lat
-                user.lng = this.location.lng
+            if (this.locationR) {
+                user.lat = this.locationR.lat
+                user.lng = this.locationR.lng
             }
             socket.to('aidProvider').emit('emergency', {
                 user: user,
@@ -73,7 +79,7 @@ class AidProvidersController extends Controller {
           console.log(this.location)
           console.log("L'aidProvider qui a accepté est" + user)
           socket.leave('aidProvider')
-        //  user.id.leave('aidReceiver')
+
           if (this.location) {
               user.user.lat = this.location.lat
               user.user.lng = this.location.lng
