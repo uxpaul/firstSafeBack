@@ -85,6 +85,11 @@ class AidProvidersController extends Controller {
             console.log(`L'id de aidProvider est : ${socket.id}`)
         })
 
+        socket.on('Rejoin', ()=>{
+          console.log("Rejoin the room aidProvider")
+          socket.join('aidProvider')
+        })
+
         // Disconnect the selected socket
         socket.on('disconnect me', () => {
             console.log("Disconnected")
