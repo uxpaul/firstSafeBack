@@ -72,6 +72,8 @@ class AidProvidersController extends Controller {
         socket.on('accept', (user) => {
           console.log(this.location)
           console.log("L'aidProvider qui a accepté est" + user)
+          socket.leave('aidProvider')
+
           if (this.location) {
               user.user.lat = this.location.lat
               user.user.lng = this.location.lng
@@ -86,7 +88,7 @@ class AidProvidersController extends Controller {
         // Disconnect the selected socket
         socket.on('disconnect me', () => {
             console.log("Disconnected")
-            socket.disconnect()
+            socket.disconnect(true)
         })
 
     }

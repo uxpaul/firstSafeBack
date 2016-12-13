@@ -19,7 +19,7 @@ module.exports = mongoose.model('User', new mongoose.Schema({
         type: Number
     },
     gender: {
-
+        type: String
     },
     password: {
         type: String
