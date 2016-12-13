@@ -81,7 +81,7 @@ class AidProvidersController extends Controller {
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-          console.log(`locationP : `, this.locationP)
+          console.log(`locationP : `+ this.locationP.lat)
           console.log("L'aidProvider qui a accepté est" + user)
           socket.leave('aidProvider')
 
