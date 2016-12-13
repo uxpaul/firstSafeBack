@@ -73,7 +73,7 @@ class AidProvidersController extends Controller {
           console.log(this.location)
           console.log("L'aidProvider qui a accepté est" + user)
           socket.leave('aidProvider')
-
+          user.id.leave('aidReceiver')
           if (this.location) {
               user.user.lat = this.location.lat
               user.user.lng = this.location.lng
@@ -85,6 +85,7 @@ class AidProvidersController extends Controller {
             console.log(`L'id de aidProvider est : ${socket.id}`)
         })
 
+        // L'aidProvider rejoin la room une fois qu'il a rempli sa mission
         socket.on('Rejoin', ()=>{
           console.log("Rejoin the room aidProvider")
           socket.join('aidProvider')
@@ -141,7 +142,6 @@ class AidProvidersController extends Controller {
             }, 15000);
         })
     }
-
 
 
 
