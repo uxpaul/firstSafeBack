@@ -73,7 +73,7 @@ class AidProvidersController extends Controller {
           console.log(this.location)
           console.log("L'aidProvider qui a accepté est" + user)
           socket.leave('aidProvider')
-          user.id.leave('aidReceiver')
+        //  user.id.leave('aidReceiver')
           if (this.location) {
               user.user.lat = this.location.lat
               user.user.lng = this.location.lng
