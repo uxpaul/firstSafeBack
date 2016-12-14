@@ -42,38 +42,26 @@ class AidProvidersController extends Controller {
         console.log('User connect _onSpace');
 
         socket.on('user', (user) => {
-            //  console.log(profession)
             let profession = user.situation
             profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
         socket.on('locationReceiver', (user) => {
           (console.log("locationReceiver"+ socket.id))
-            //socket.to(socket.id).emit('locationReceiver', locationR)
-            //trouver le user qui a ce socket.id
-            //user.lat = locationR.lat
-            //user.lng = locationR.lng
-            //this.locationR = locationR
+
         })
 
         socket.on('locationProvider', user => {
-            //socket.emit('locationProvider', locationP)
-            //this.locationP = locationP
-            //console.log(locationP)
+
         })
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-            // if (this.locationR) {
-            //     user.lat = this.locationR.lat
-            //     user.lng = this.locationR.lng
-            // }
             console.log(user)
             socket.to('aidProvider').emit('emergency', {
                 user: user,
                 id: socket.id
             })
-
             console.log(`Id de l'aidReceiver : ${socket.id}`)
         });
 
@@ -82,10 +70,6 @@ class AidProvidersController extends Controller {
             console.log("L'aidProvider qui a accepté est" + user)
             socket.leave('aidProvider')
 
-            if (this.location) {
-                user.user.lat = this.locationP.lat
-                user.user.lng = this.locationP.lng
-            }
             socket.to(user.id).emit('accept', {
                 user: user.user,
                 id: socket.id
