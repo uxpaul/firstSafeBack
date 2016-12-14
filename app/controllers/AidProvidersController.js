@@ -52,13 +52,13 @@ class AidProvidersController extends Controller {
             //trouver le user qui a ce socket.id
             //user.lat = locationR.lat
             //user.lng = locationR.lng
-            this.locationR = locationR
+            //this.locationR = locationR
         })
 
         socket.on('locationProvider', user => {
             //socket.emit('locationProvider', locationP)
-            this.locationP = locationP
-            console.log(locationP)
+            //this.locationP = locationP
+            //console.log(locationP)
         })
 
         // Reception des infos de l'AR et redirection vers l'AP
