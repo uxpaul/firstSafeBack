@@ -23,7 +23,7 @@ class AidProvidersController extends Controller {
                 numClients: numClients
             });
 
-        //    console.log('Connected clients:', numClients);
+            //    console.log('Connected clients:', numClients);
 
             socket.on('disconnect', function() {
                 numClients--;
@@ -31,7 +31,7 @@ class AidProvidersController extends Controller {
                     numClients: numClients
                 });
 
-            //    console.log('Connected clients:', numClients);
+                //    console.log('Connected clients:', numClients);
             });
 
         });
@@ -42,7 +42,7 @@ class AidProvidersController extends Controller {
         console.log('User connect _onSpace');
 
         socket.on('user', (profession) => {
-        //  console.log(profession)
+            //  console.log(profession)
             profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
@@ -50,26 +50,24 @@ class AidProvidersController extends Controller {
         socket.on('location', (location) => {
             socket.emit('location', location)
             this.location = location
-          //        console.log(location)
+                //        console.log(location)
         })
 
-        socket.on('locationReceiver', (locationR)=>{
-          socket.emit('locationReceiver', locationR)
-          this.locationR = locationR
+        socket.on('locationReceiver', (locationR) => {
+          (console.log("locationReceiver"+ socket.id))
+            socket.to(socket.id).emit('locationReceiver', locationR)
+            this.locationR = locationR
         })
 
-        socket.on('locationProvider', locationP=>{
-          socket.emit('locationProvider', locationP)
-          this.locationP = locationP
-          console.log(locationP )
-
+        socket.on('locationProvider', locationP => {
+            socket.emit('locationProvider', locationP)
+            this.locationP = locationP
+            console.log(locationP)
         })
-
-
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-          //  console.log(this.location)
+            //  console.log(this.location)
             if (this.locationR) {
                 user.lat = this.locationR.lat
                 user.lng = this.locationR.lng
@@ -83,24 +81,24 @@ class AidProvidersController extends Controller {
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-          console.log("L'aidProvider qui a accepté est" + user)
-          socket.leave('aidProvider')
+            console.log("L'aidProvider qui a accepté est" + user)
+            socket.leave('aidProvider')
 
-          if (this.location) {
-              user.user.lat = this.locationP.lat
-              user.user.lng = this.locationP.lng
-          }
+            if (this.location) {
+                user.user.lat = this.locationP.lat
+                user.user.lng = this.locationP.lng
+            }
             socket.to(user.id).emit('accept', {
-            user : user.user,
-            id : socket.id
+                user: user.user,
+                id: socket.id
             })
             console.log(`L'id de aidProvider est : ${socket.id}`)
         })
 
         // L'aidProvider rejoin la room une fois qu'il a rempli sa mission
-        socket.on('Rejoin', ()=>{
-          console.log("Rejoin the room aidProvider")
-          socket.join('aidProvider')
+        socket.on('Rejoin', () => {
+            console.log("Rejoin the room aidProvider")
+            socket.join('aidProvider')
         })
 
         // Disconnect the selected socket
