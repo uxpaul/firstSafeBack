@@ -64,7 +64,7 @@ class AidProvidersController extends Controller {
             })
             console.log(`Id de l'aidReceiver : ${socket.id}`)
         });
-
+        
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
             console.log("L'aidProvider qui a accepté est" + user)
