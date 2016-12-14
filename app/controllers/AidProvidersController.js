@@ -41,36 +41,32 @@ class AidProvidersController extends Controller {
     _onSpace(socket) {
         console.log('User connect _onSpace');
 
-        socket.on('user', (profession) => {
+        socket.on('user', (user) => {
             //  console.log(profession)
-            profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
+            user.situation === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
-        // Récuparation de lapoistion actuelle
-        socket.on('location', (location) => {
-            socket.emit('location', location)
-            this.location = location
-                //        console.log(location)
-        })
-
-        socket.on('locationReceiver', (locationR) => {
+        socket.on('locationReceiver', (user) => {
           (console.log("locationReceiver"+ socket.id))
-            socket.to(socket.id).emit('locationReceiver', locationR)
+            //socket.to(socket.id).emit('locationReceiver', locationR)
+            //trouver le user qui a ce socket.id
+            //user.lat = locationR.lat
+            //user.lng = locationR.lng
             this.locationR = locationR
         })
 
-        socket.on('locationProvider', locationP => {
-            socket.emit('locationProvider', locationP)
+        socket.on('locationProvider', user => {
+            //socket.emit('locationProvider', locationP)
             this.locationP = locationP
             console.log(locationP)
         })
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-            if (this.locationR) {
-                user.lat = this.locationR.lat
-                user.lng = this.locationR.lng
-            }
+            // if (this.locationR) {
+            //     user.lat = this.locationR.lat
+            //     user.lng = this.locationR.lng
+            // }
             console.log(user)
             socket.to('aidProvider').emit('emergency', {
                 user: user,
