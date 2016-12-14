@@ -43,7 +43,8 @@ class AidProvidersController extends Controller {
 
         socket.on('user', (user) => {
             //  console.log(profession)
-            user.situation === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
+            let profession = user.situation
+            profession === 'aidReceiver' ? socket.join('aidReceiver') : socket.join('aidProvider')
         });
 
         socket.on('locationReceiver', (user) => {
