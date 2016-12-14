@@ -67,15 +67,16 @@ class AidProvidersController extends Controller {
 
         // Reception des infos de l'AR et redirection vers l'AP
         socket.on('emergency', (user) => {
-            //  console.log(this.location)
             if (this.locationR) {
                 user.lat = this.locationR.lat
                 user.lng = this.locationR.lng
             }
+            console.log(user)
             socket.to('aidProvider').emit('emergency', {
                 user: user,
                 id: socket.id
             })
+
             console.log(`Id de l'aidReceiver : ${socket.id}`)
         });
 
