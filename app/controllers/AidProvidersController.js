@@ -53,11 +53,11 @@ class AidProvidersController extends Controller {
         })
 
         socket.on('locationProvider', user => {
-          let data = {}
-          data.lat = user.lat
-          data.lng = user.lng
-          socket.in('aidReceiver').emit('show-marker', data);
-
+          let newLocation = {}
+          newLocation.lat = user.lat
+          newLocation.lng = user.lng
+          socket.in('aidReceiver').emit('show-marker', {newLocation : newLocation, id : socket.id});
+          console.log("newLocation de ":sokcet.id)
         })
 
         // Reception des infos de l'AR et redirection vers l'AP
