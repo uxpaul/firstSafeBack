@@ -31,6 +31,7 @@ class AidProvidersController extends Controller {
                     numClients: numClients
                 });
 
+                nsp.emit('disconnect')
                 //    console.log('Connected clients:', numClients);
             });
 
