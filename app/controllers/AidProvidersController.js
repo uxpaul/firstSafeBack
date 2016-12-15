@@ -47,11 +47,15 @@ class AidProvidersController extends Controller {
         });
 
         socket.on('locationReceiver', (user) => {
-          (console.log("locationReceiver"+ socket.id))
+            (console.log("locationReceiver" + socket.id))
 
         })
 
         socket.on('locationProvider', user => {
+          let data = {}
+          data.lat = user.lat
+          data.lng = user.lng
+          socket.broadcast.emit('show-marker', data);
 
         })
 
@@ -62,14 +66,14 @@ class AidProvidersController extends Controller {
                 user: user,
                 id: socket.id
             })
-            console.log(`Id de l'aidReceiver : ${socket.id}`)
+            console.log(`Id de l'aidReceiver qui envoit l'aide : ${socket.id}`)
         });
-        
+
+
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
             console.log("L'aidProvider qui a accepté est" + user)
             socket.leave('aidProvider')
-
             socket.to(user.id).emit('accept', {
                 user: user.user,
                 id: socket.id
