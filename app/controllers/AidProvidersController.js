@@ -32,7 +32,7 @@ class AidProvidersController extends Controller {
                 });
 
                 nsp.emit('disconnect')
-                //    console.log('Connected clients:', numClients);
+                    //    console.log('Connected clients:', numClients);
             });
 
         });
@@ -48,16 +48,19 @@ class AidProvidersController extends Controller {
         });
 
         socket.on('locationReceiver', (user) => {
-            (console.log("locationReceiver" + socket.id))
+            console.log("locationReceiver" + socket.id)
 
         })
 
         socket.on('locationProvider', user => {
-          let newLocation = {}
-          newLocation.lat = user.lat
-          newLocation.lng = user.lng
-          socket.in('aidReceiver').emit('show-marker', {newLocation : newLocation, id : socket.id});
-          console.log("newLocation de " + sokcet.id)
+            let newLocation = {}
+            newLocation.lat = user.lat
+            newLocation.lng = user.lng
+            socket.in('aidReceiver').emit('show-marker', {
+                newLocation: newLocation,
+                id: socket.id
+            })
+            console.log(socket.id)
         })
 
         // Reception des infos de l'AR et redirection vers l'AP
