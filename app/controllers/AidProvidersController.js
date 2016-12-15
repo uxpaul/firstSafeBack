@@ -56,7 +56,7 @@ class AidProvidersController extends Controller {
           let data = {}
           data.lat = user.lat
           data.lng = user.lng
-          socket.broadcast.emit('show-marker', data);
+          socket.in('aidReceiver').emit('show-marker', data);
 
         })
 
