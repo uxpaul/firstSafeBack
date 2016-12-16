@@ -10,7 +10,7 @@ module.exports = (app, io) => {
     app.post('/admin', ctrl.connect)
 
 
-    app.get('/users', auth.user.isAuthenticate, (req, res, next) => {
+    app.get('/users', (req, res, next) => {
         return ctrl.find(req, res, next)
     })
 
