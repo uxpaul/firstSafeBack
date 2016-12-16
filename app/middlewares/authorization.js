@@ -12,7 +12,7 @@ module.exports = {
         if (!req.body.email || !req.body.password) {
             res.status(400).send("Please enter your email and password")
         } else {
-            ADMIN.findOne(req.body, {
+            USER.findOne(req.body, {
                 password: 0
             }, (err, user) => {
                 if (err)
