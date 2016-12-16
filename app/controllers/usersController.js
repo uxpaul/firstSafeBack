@@ -1,9 +1,8 @@
 'use strict'
-
 let jwt = require('jsonwebtoken')
 let Controller = require('./Controller')
-const USER = require('../models/users')
 const ENV = require('../../config/env')
+const USER = require('../models/users')
 
 
 class usersController extends Controller {
@@ -11,7 +10,7 @@ class usersController extends Controller {
         super(USER)
       }
 
-      local(req, res, next) {
+      connnect(req, res, next) {
           if (!req.body.email || !req.body.password) {
               res.status(400).send("Please enter your email and password")
           } else {

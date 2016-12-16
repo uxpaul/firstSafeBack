@@ -7,6 +7,9 @@ module.exports = (app, io) => {
 
     let ctrl = new usersController(io)
 
+    app.post('/admin', ctrl.connect)
+
+
     app.get('/users', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.find(req, res, next)
     })
@@ -22,8 +25,6 @@ module.exports = (app, io) => {
     app.post('/users', (req, res, next) => {
         return ctrl.create(req, res, next)
     })
-
-    app.post('/admin', auth.user.isAuthenticate)
 
 
     app.put('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
