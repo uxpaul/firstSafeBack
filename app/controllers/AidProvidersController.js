@@ -85,6 +85,7 @@ class AidProvidersController extends Controller {
         })
 
         socket.on('acceptation', ()=>{
+          console.log('aidReceiver left the room ')
           socket.leave('aidReceiver')
         })
 
