@@ -10,7 +10,7 @@ class usersController extends Controller {
         super(USER)
       }
 
-      connnect(req, res, next) {
+      connect(req, res, next) {
           if (!req.body.email || !req.body.password) {
               res.status(400).send("Please enter your email and password")
           } else {
