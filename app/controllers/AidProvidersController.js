@@ -76,13 +76,12 @@ class AidProvidersController extends Controller {
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
-            console.log("L'aidProvider qui a accepté est" + user)
             socket.leave('aidProvider')
             socket.to(user.id).emit('accept', {
                 user: user.user,
                 id: socket.id
             })
-            console.log(`L'id de aidProvider est : ${socket.id}`)
+            console.log(`L'id de aidProvider qui a accepté est : ${socket.id}`)
         })
 
         // L'aidProvider rejoin la room une fois qu'il a rempli sa mission
