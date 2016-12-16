@@ -84,9 +84,9 @@ class AidProvidersController extends Controller {
             console.log(`L'id de aidProvider qui a accepté est : ${socket.id}`)
         })
 
-        socket.on('acceptation', ()=>{
-          console.log('aidReceiver left the room ')
-          socket.leave('aidReceiver')
+        socket.on('acceptation', () => {
+            socket.leave('aidReceiver')
+            console.log('aidReceiver left the room')
         })
 
         // L'aidProvider rejoin la room une fois qu'il a rempli sa mission

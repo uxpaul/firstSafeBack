@@ -31,7 +31,7 @@ module.exports = mongoose.model('User', new mongoose.Schema({
         type: String
     },
     email: {
-        tyep: String
+        type: String
     },
     lat: {
         type: Number

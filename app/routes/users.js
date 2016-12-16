@@ -1,6 +1,7 @@
 'use strict'
 
 let usersController = require('../controllers/usersController')
+let auth = require('../middlewares/authorization')
 
 module.exports = (app, io) => {
 
@@ -21,6 +22,9 @@ module.exports = (app, io) => {
     app.post('/users', (req, res, next) => {
         return ctrl.create(req, res, next)
     })
+
+    app.post('/admin', auth.local)
+
 
     app.put('/users/:id', (req, res, next) => {
         return ctrl.update(req, res, next)
