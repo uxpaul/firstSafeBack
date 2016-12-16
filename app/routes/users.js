@@ -14,7 +14,7 @@ module.exports = (app, io) => {
     app.get('/users/:username', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.findOne(req, res, next)
     })
-    
+
     app.get('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.findById(req, res, next)
     })
@@ -23,7 +23,7 @@ module.exports = (app, io) => {
         return ctrl.create(req, res, next)
     })
 
-    app.post('/admin', auth.local)
+    app.post('/admin', auth.user.isAuthenticate)
 
 
     app.put('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
