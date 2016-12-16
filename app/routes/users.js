@@ -7,15 +7,15 @@ module.exports = (app, io) => {
 
     let ctrl = new usersController(io)
 
-    app.get('/users', (req, res, next) => {
+    app.get('/users', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.find(req, res, next)
     })
 
-    app.get('/users/:username', (req, res, next) => {
+    app.get('/users/:username', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.findOne(req, res, next)
     })
-
-    app.get('/users/:id', (req, res, next) => {
+    
+    app.get('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.findById(req, res, next)
     })
 
@@ -26,11 +26,11 @@ module.exports = (app, io) => {
     app.post('/admin', auth.local)
 
 
-    app.put('/users/:id', (req, res, next) => {
+    app.put('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.update(req, res, next)
     })
 
-    app.delete('/users/:id', (req, res, next) => {
+    app.delete('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
         return ctrl.delete(req, res, next)
     })
 
