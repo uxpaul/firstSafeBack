@@ -27,7 +27,7 @@ module.exports = (app, io) => {
     })
 
 
-    app.put('/users/:id', auth.user.isAuthenticate, (req, res, next) => {
+    app.put('/users/:id', (req, res, next) => {
         return ctrl.update(req, res, next)
     })
 

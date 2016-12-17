@@ -18,6 +18,9 @@ module.exports = mongoose.model('User', new mongoose.Schema({
     age: {
         type: Number
     },
+    tel : {
+      type: Number
+    },
     gender: {
         type: String
     },
