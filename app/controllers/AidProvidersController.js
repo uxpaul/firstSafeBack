@@ -51,7 +51,7 @@ class AidProvidersController extends Controller {
             let newLocation = {}
             newLocation.lat = user.lat
             newLocation.lng = user.lng
-            socket.in('aidReceiver').emit('show-marker', {
+            socket.to('aidReceiver').emit('show-marker', {
                 newLocation: newLocation,
                 id: socket.id
             })
@@ -79,6 +79,7 @@ class AidProvidersController extends Controller {
             console.log(`L'id de aidProvider qui a accepté est : ${socket.id}`)
         })
 
+
         socket.on('acceptation', () => {
             socket.leave('aidReceiver')
             console.log('aidReceiver left the room')
@@ -100,46 +101,7 @@ class AidProvidersController extends Controller {
 
     _onConnection(socket) {
 
-        socket.on('authenticate', function(data, callback) {
-            socket.auth = false;
 
-            //Data du client
-            var name = data.name;
-            var password = data.password;
-
-            USER.find({
-                name: name
-            }, function(err, user) {
-                user.forEach((element) => {
-
-                    // auth success/failure
-                    if (!(password === element.password && name === element.name))
-                        socket.emit('Try again');
-                    else {
-                        socket.auth = true;
-                        socket.emit('authenticated', element.name)
-                        console.log("Authenticated socket ", socket.id);
-                        console.log(element.profession)
-
-                        if (element.profession === "iller") {
-                            socket.join('/iller')
-                        } else {
-                            socket.join('/Doctor')
-                        }
-
-                    }
-                })
-            });
-
-            setTimeout(function() {
-                //If the socket didn't authenticate, disconnect it
-                if (!socket.auth) {
-                    console.log("Disconnecting socket ", socket.id);
-                    socket.emit('Try again');
-                    socket.disconnect('unauthorized');
-                }
-            }, 15000);
-        })
     }
 
 
