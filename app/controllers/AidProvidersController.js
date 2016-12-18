@@ -55,7 +55,7 @@ class AidProvidersController extends Controller {
                 newLocation: newLocation,
                 id: socket.id
             })
-            console.log(socket.id)
+            console.log("aidProviders'id location" + socket.id)
         })
 
         // Reception des infos de l'AR et redirection vers l'AP
