@@ -23,16 +23,15 @@ class AidProvidersController extends Controller {
                 numClients: numClients
             });
 
-            //    console.log('Connected clients:', numClients);
-
             socket.on('disconnect', function() {
                 numClients--;
                 nsp.emit('stats', {
                     numClients: numClients
                 });
+                nsp.emit('disconnect', {
+                    id: socket.id
+                });
 
-                nsp.emit('disconnect', {id :socket.id})
-                    //    console.log('Connected clients:', numClients);
             });
 
         });
@@ -77,13 +76,9 @@ class AidProvidersController extends Controller {
                 id: socket.id
             })
             console.log(`L'id de aidProvider qui a accepté est : ${socket.id}`)
+            socket.broadcast.to('aidProvider').emit('iAccept');
         })
 
-
-        socket.on('acceptation', () => {
-            socket.leave('aidReceiver')
-            console.log('aidReceiver left the room')
-        })
 
         // L'aidProvider rejoin la room une fois qu'il a rempli sa mission
         socket.on('Rejoin', () => {
