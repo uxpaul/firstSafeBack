@@ -76,7 +76,7 @@ class AidProvidersController extends Controller {
                 id: socket.id
             })
             console.log(`L'id de aidProvider qui a accepté est : ${socket.id}`)
-            socket.broadcast.to('aidProvider').emit('iAccept');
+            socket.to('aidProvider').emit('iAccept');
         })
 
 
