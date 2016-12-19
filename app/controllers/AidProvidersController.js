@@ -31,7 +31,7 @@ class AidProvidersController extends Controller {
                     numClients: numClients
                 });
 
-                nsp.emit('disconnect', socket.id)
+                nsp.emit('disconnect', {id :socket.id})
                     //    console.log('Connected clients:', numClients);
             });
 
