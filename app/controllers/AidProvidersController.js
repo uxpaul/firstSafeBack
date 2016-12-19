@@ -70,13 +70,13 @@ class AidProvidersController extends Controller {
 
         // Traite l'acceptation du medecin et envoie au malade ses infos
         socket.on('accept', (user) => {
+            socket.broadcast.emit('iAccept');
             socket.leave('aidProvider')
             socket.to(user.id).emit('accept', {
                 user: user.user,
                 id: socket.id
             })
             console.log(`L'id de aidProvider qui a accepté est : ${socket.id}`)
-            socket.to('aidProvider').emit('iAccept');
         })
 
 
